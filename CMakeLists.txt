@@ -1,17 +1,17 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.18)
+set(CMAKE_DISABLE_SOURCE_CHANGES ON)
+set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 
-project(FreeFEM C CXX Fortran)
+project(FreeFEM
+        VERSION 4.10.0
+        DESCRIPTION "A high level multiphysics finite element software"
+        LANGUAGES C CXX Fortran)
 
-set(FREEFEM_VERSION 4.0)
+file(GLOB FF_CMAKE_MODULES ${CMAKE_SOURCE_DIR}/cmake/*/)
+list(APPEND CMAKE_MODULE_PATH ${FF_CMAKE_MODULES})
 
-# Add the path containing cmake modules
-# Note: this line cannot be put in the body of ff_configure_cmake
-# because ff_configure_cmake is searched in the right repository 
-# thanks to this line
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
-
-include(ff_configure_cmake)
 include(ff_configure_compilers)
+
 include(ff_configure_thirdparty)
 include(ff_write_config_file)
 
@@ -21,11 +21,8 @@ ff_configure_thirdparty()
 
 ff_write_config_file()
 
-# creation of "make test" command
-# Note: this call MUST be performed in the main CMake script
+# Enable CTest.
 enable_testing()
 
 add_subdirectory(src)
 add_subdirectory(examples)
-
-
