@@ -362,6 +362,8 @@ mdate-sh
 ylwrap
 py-compile
 texinfo.tex
+/**/build
+/**/work
 # Local Variables:
 # mode:conf
 # ispell-local-dictionary:"british"
